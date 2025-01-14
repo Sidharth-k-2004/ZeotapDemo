@@ -21,8 +21,8 @@ function App() {
     setLoading(true);
     setError(null);
     try {
-      const result = await axios.post('http://localhost:5000/chat', { question });
-      // const result = await axios.post('https://zeotap-cdp-chatbot-server.vercel.app/chat', { question });
+      // const result = await axios.post('http://localhost:5000/chat', { question });
+      const result = await axios.post('https://zeotap-demo-server.vercel.app/chat', { question });
       const newEntry = { question, answer: result.data.answer };
       setChatHistory(prevHistory => [...prevHistory, newEntry]);
       setTypingEffect('');
