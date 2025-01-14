@@ -132,7 +132,7 @@ app.use(bodyParser.json());
 
 const allowedOrigins = [
   'http://localhost:3000', 
-  'https://zeotap-cdp-chatbot-client.vercel.app'
+  'https://zeotap-demo-client.vercel.app'
 ];
 
 app.use(cors({
