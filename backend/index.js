@@ -118,18 +118,35 @@ const app = express();
 const port = 5000;
 
 // Updated CORS configuration
-app.use(cors({
-  origin: 'https://zeotap-cdp-chatbot-client.vercel.app/',  
-  optionsSuccessStatus: 200  
-}));
+// app.use(cors({
+//   origin: 'https://zeotap-cdp-chatbot-client.vercel.app',  
+//   optionsSuccessStatus: 200  
+// }));
 
-// Handling OPTIONS requests for preflight (CORS)
-app.options('*', (req, res) => {
-  console.log('Preflight request received');
-  res.status(200).send();
-});
+// app.options('*', (req, res) => {
+//   console.log('Preflight request received');
+//   res.status(200).send();
+// });
 
 app.use(bodyParser.json());
+
+const allowedOrigins = [
+  'http://localhost:3000', 
+  'https://zeotap-cdp-chatbot-client.vercel.app'
+];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  methods: ['GET', 'POST'],  // Specify allowed methods
+  allowedHeaders: ['Content-Type', 'Authorization'],  // Specify allowed headers
+  credentials: true  // Allow cookies/auth
+}));
 
 function findBestMatch(question) {
   let bestMatch = null;
